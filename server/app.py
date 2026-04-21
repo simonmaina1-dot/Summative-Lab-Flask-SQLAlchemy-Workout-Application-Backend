@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request, abort, make_response
 from flask_migrate import Migrate
 from marshmallow.exceptions import ValidationError
 
-from models import *
+from ..models import db, Exercise, Workout, WorkoutExercise
 from server.schemas import WorkoutSchema, ExerciseSchema, WorkoutExerciseSchema, workout_exercise_add_schema
 
 app = Flask(__name__)
