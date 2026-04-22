@@ -1,13 +1,13 @@
-from marshmallow import fields, Schema, validate, ValidationError
+from marshmallow import fields, Schema, validate
 from models import Exercise, Workout, WorkoutExercise
 
 class WorkoutExerciseSchema(Schema):
     id = fields.Int(dump_only=True)
     workout_id = fields.Int(required=True)
     exercise_id = fields.Int(required=True)
-    reps = fields.Int(validate=validate.Range(min=0), missing=0)
-    sets = fields.Int(required=True, validate=validate.Range(min=1))
-    duration_seconds = fields.Int(validate=validate.Range(min=0), missing=0)
+    reps = fields.Int(validate=validate.Range(min=0), load_default=0)
+    sets = fields.Int(validate=validate.Range(min=1), load_default=1)
+    duration_seconds = fields.Int(validate=validate.Range(min=0), load_default=0)
 
     # Nested for stretch
     exercise = fields.Nested('ExerciseSchema', dump_only=True)
@@ -17,7 +17,7 @@ class ExerciseSchema(Schema):
     id = fields.Int(dump_only=True)
     name = fields.Str(required=True, validate=validate.Length(min=2, max=50))
     category = fields.Str(required=True, validate=validate.OneOf(['strength', 'cardio', 'flexibility', 'balance']))
-    equipment_needed = fields.Bool(missing=False)
+    equipment_needed = fields.Bool(load_default=False)
 
     # Schema validations (2+): length and oneof
 

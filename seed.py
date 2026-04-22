@@ -3,9 +3,6 @@
 import sys
 from datetime import date
 
-# Add root to path for imports
-sys.path.insert(0, '.')
-
 from server.app import app
 from models import db, Exercise, Workout, WorkoutExercise
 
@@ -35,12 +32,31 @@ with app.app_context():
     db.session.commit()
 
     # Seed WorkoutExercises
-    workout_exercises = [
-        WorkoutExercise(workout_id=1, exercise_id=1, sets=3, reps=15),  # Workout 1 - Pushups
-        WorkoutExercise(workout_id=1, exercise_id=2, sets=4, reps=12),  # Workout 1 - Squats
-        WorkoutExercise(workout_id=2, exercise_id=3, sets=1, duration_seconds=1800),  # Workout 2 - Running 30min
-        WorkoutExercise(workout_id=2, exercise_id=4, sets=3, reps=60),  # Workout 2 - Plank (60s per rep)
-    ]
+    we1 = WorkoutExercise()
+    we1.workout_id = 1
+    we1.exercise_id = 1
+    we1.sets = 3
+    we1.reps = 15  # Workout 1 - Pushups
+    
+    we2 = WorkoutExercise()
+    we2.workout_id = 1
+    we2.exercise_id = 2
+    we2.sets = 4
+    we2.reps = 12  # Workout 1 - Squats
+    
+    we3 = WorkoutExercise()
+    we3.workout_id = 2
+    we3.exercise_id = 3
+    we3.sets = 1
+    we3.duration_seconds = 1800  # Workout 2 - Running 30min
+    
+    we4 = WorkoutExercise()
+    we4.workout_id = 2
+    we4.exercise_id = 4
+    we4.sets = 3
+    we4.reps = 60  # Workout 2 - Plank (60s per rep)
+    
+    workout_exercises = [we1, we2, we3, we4]
     db.session.bulk_save_objects(workout_exercises)
     db.session.commit()
 
@@ -48,6 +64,7 @@ with app.app_context():
 
     # Quick relationship test
     workout1 = Workout.query.first()
-    print(f"Workout 1 has {len(workout1.workout_exercises)} exercises")
-    if workout1.workout_exercises:
-        print(f"First exercise: {workout1.workout_exercises[0].exercise.name}")
+    if workout1:
+        print(f"Workout 1 has {len(workout1.workout_exercises)} exercises")
+        if workout1.workout_exercises:
+            print(f"First exercise: {workout1.workout_exercises[0].exercise.name}")

@@ -1,8 +1,8 @@
-from flask import Flask, jsonify, request, abort, make_response
+from flask import Flask, jsonify, request
 from flask_migrate import Migrate
 from marshmallow.exceptions import ValidationError
 
-from ..models import db, Exercise, Workout, WorkoutExercise
+from models import db, Exercise, Workout, WorkoutExercise
 from server.schemas import WorkoutSchema, ExerciseSchema, WorkoutExerciseSchema, workout_exercise_add_schema
 
 app = Flask(__name__)
@@ -93,9 +93,14 @@ def create_workout_exercise(workout_id, exercise_id):
     get_exercise_or_404(exercise_id)
     try:
         data = request.get_json() or {}
-        schema = workout_exercise_add_schema
-        we_data = schema.load(data)
-        we = WorkoutExercise(workout_id=workout_id, exercise_id=exercise_id, **we_data)
+        validated_data = dict(workout_exercise_add_schema.load(data) or {})
+        we = WorkoutExercise()
+        we.workout_id = workout_id
+        we.exercise_id = exercise_id
+        we.reps = validated_data.get('reps', 0)
+        if 'sets' in validated_data:
+            we.sets = validated_data['sets']
+        we.duration_seconds = validated_data.get('duration_seconds', 0)
         db.session.add(we)
         db.session.commit()
         return jsonify(WorkoutExerciseSchema().dump(we)), 201
