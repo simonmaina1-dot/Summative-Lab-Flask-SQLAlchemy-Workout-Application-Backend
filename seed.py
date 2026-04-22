@@ -4,7 +4,7 @@ import sys
 from datetime import date
 
 from server.app import app
-from models import db, Exercise, Workout, WorkoutExercise
+from server.models import db, Exercise, Workout, WorkoutExercise
 
 with app.app_context():
     # Reset database

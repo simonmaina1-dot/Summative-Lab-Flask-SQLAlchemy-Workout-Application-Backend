@@ -4,7 +4,7 @@ sys.path.insert(0, os.path.dirname(__file__) + '/..')
 from flask import Flask, jsonify, request
 from flask_migrate import Migrate
 from marshmallow.exceptions import ValidationError
-from models import db, Exercise, Workout, WorkoutExercise
+from server.models import db, Exercise, Workout, WorkoutExercise
 from server.schemas import WorkoutSchema, ExerciseSchema, WorkoutExerciseSchema, workout_exercise_add_schema
 
 app = Flask(__name__)
