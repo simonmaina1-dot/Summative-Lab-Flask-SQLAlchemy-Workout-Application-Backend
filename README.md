@@ -21,7 +21,7 @@ Key features:
    ```
 4. Seed example data:
    ```bash
-   pipenv run python seed.py
+   pipenv run python server/seed.py
    ```
 
 ## Run Instructions
@@ -58,4 +58,4 @@ See [Pipfile](Pipfile).
 - Use curl/Postman for endpoints.
 - Validations/constraints enforced (e.g., duration >0, category enum).
 
-Repo ready for submission!
+
