@@ -1,3 +1,6 @@
+import os
+import sys
+sys.path.insert(0, os.path.dirname(__file__) + '/..')
 from marshmallow import fields, Schema, validate
 from models import Exercise, Workout, WorkoutExercise
 
