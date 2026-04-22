@@ -9,7 +9,7 @@ Key features:
 - Nested serialization
 
 ## Installation Instructions
-1. Ensure Python 3.8+ and pipenv installed.
+1. Ensure Python 3.12+ and pipenv installed.
 2. ```bash
    pipenv install
    ```
@@ -28,12 +28,12 @@ Key features:
 ```bash
 pipenv run flask run --port=5555 --debug
 ```
-App runs at http://localhost:5555
+Database stored at `instance/app.db`. App runs at http://localhost:5555
 
 ## API Endpoints
 
 ### Workouts
-- `GET /workouts` - List all workouts (paginated optional)
+- `GET /workouts` - List all workouts
 - `GET /workouts/<int:id>` - Show workout with nested exercises
 - `POST /workouts` - Create workout (body: {"date":"2024-10-01", "duration_minutes":45, "notes":"..."})
 - `DELETE /workouts/<int:id>` - Delete workout (cascade deletes associations)
